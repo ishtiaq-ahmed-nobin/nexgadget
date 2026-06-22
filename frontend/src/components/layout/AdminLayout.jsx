@@ -21,14 +21,15 @@ const navItems = [
 
 export default function AdminLayout() {
   const token = useSelector((s) => s.auth.token)
-  if (!token) return <Navigate to="/admin/login" replace />
+  const { user } = useSelector((s) => s.auth)
+  const isAdmin = user?.role === 'admin' || user?.role === 'super_admin'
+  if (!token || !isAdmin) return <Navigate to="/admin/login" replace />
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
-  const { user } = useSelector((s) => s.auth)
   const { dark, toggleDark } = useTheme()
 
   const isActive = (item) => {

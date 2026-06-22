@@ -49,6 +49,7 @@ if ($method === 'GET') {
             ...$order,
             'customer' => $order['customer_name'],
             'email' => $order['customer_email'],
+            'items_raw' => $order['items'],
             'items_count' => count($items),
             'items' => count($items),
             'date' => substr($order['created_at'], 0, 10),
@@ -66,6 +67,17 @@ if ($method === 'PUT' && $id && $sub === 'status') {
         $stmt->execute([$status, $id]);
     }
     echo json_encode(['message' => 'Order status updated']);
+    exit;
+}
+
+if ($method === 'PUT' && $id && $sub === 'payment') {
+    requireAdmin();
+    $payment = $input['payment'] ?? '';
+    if ($payment) {
+        $stmt = $db->prepare("UPDATE orders SET payment = ? WHERE id = ?");
+        $stmt->execute([$payment, $id]);
+    }
+    echo json_encode(['message' => 'Order payment updated']);
     exit;
 }
 

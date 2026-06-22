@@ -73,6 +73,14 @@ export default function Login() {
         <p className={`text-center text-sm mt-6 ${dark ? 'text-gray-400' : 'text-gray-500'}`}>
           Don't have an account? <Link to="/register" className="text-[#7c3aed] font-medium hover:underline">Create one</Link>
         </p>
+
+        <div className={`mt-5 rounded-lg border px-4 py-3 text-sm ${
+          dark ? 'border-gray-700 bg-[#0f172a] text-gray-300' : 'border-gray-200 bg-gray-50 text-gray-600'
+        }`}>
+          <p className={`font-semibold ${dark ? 'text-gray-200' : 'text-gray-700'}`}>Customer Login</p>
+          <p className="mt-1">User ID: <span className="font-medium">sarah@example.com</span></p>
+          <p>Password: <span className="font-medium">password</span></p>
+        </div>
       </div>
     </div>
   )

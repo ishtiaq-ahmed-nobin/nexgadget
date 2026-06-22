@@ -142,6 +142,11 @@ export const updateOrderStatusApi = async (id, status) => {
   return data
 }
 
+export const updateOrderPaymentApi = async (id, payment) => {
+  const { data } = await axiosInstance.put(`/orders/${id}/payment`, { payment })
+  return data
+}
+
 export const fetchCustomersApi = async (params) => {
   const { data } = await axiosInstance.get('/customers', { params })
   return data
