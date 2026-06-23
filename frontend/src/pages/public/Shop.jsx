@@ -165,7 +165,7 @@ export default function Shop() {
                 )}
                 {filters.category && (
                   <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${dark ? 'bg-[#334155] text-gray-200' : 'bg-purple-100 text-purple-700'}`}>
-                    {filters.category}
+                    {categories?.find(c => c.slug === filters.category)?.name || filters.category}
                     <button onClick={() => setFilters(f => ({ ...f, category: '', page: 1 }))}><HiX className="w-3 h-3" /></button>
                   </span>
                 )}

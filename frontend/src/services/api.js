@@ -2,6 +2,8 @@ import axiosInstance from './axios'
 
 import { products as mockProducts, categories as mockCategories } from '../data/products'
 
+const slugToName = Object.fromEntries(mockCategories.map((c) => [c.slug.toLowerCase(), c.name]))
+
 function getMockProducts(params = {}) {
   let filtered = [...mockProducts]
   if (params.search) {
@@ -9,7 +11,10 @@ function getMockProducts(params = {}) {
     filtered = filtered.filter((p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
   }
   if (params.category) {
-    filtered = filtered.filter((p) => p.category.toLowerCase() === params.category.toLowerCase() || p.category_name?.toLowerCase() === params.category.toLowerCase())
+    const catName = slugToName[params.category.toLowerCase()]
+    if (catName) {
+      filtered = filtered.filter((p) => p.category.toLowerCase() === catName.toLowerCase() || p.category_name?.toLowerCase() === catName.toLowerCase())
+    }
   }
   if (params.minPrice) filtered = filtered.filter((p) => p.price >= Number(params.minPrice))
   if (params.maxPrice) filtered = filtered.filter((p) => p.price <= Number(params.maxPrice))

@@ -82,9 +82,14 @@ if ($method === 'GET' && !$id) {
         $params[] = "%$search%";
     }
     if ($category) {
-        $where[] = "(LOWER(category) = ? OR LOWER(category_name) = ?)";
-        $params[] = strtolower($category);
-        $params[] = strtolower($category);
+        $catStmt = $db->prepare("SELECT name FROM categories WHERE LOWER(slug) = LOWER(?)");
+        $catStmt->execute([$category]);
+        $catName = $catStmt->fetchColumn();
+        if ($catName) {
+            $where[] = "(LOWER(category) = ? OR LOWER(category_name) = ?)";
+            $params[] = strtolower($catName);
+            $params[] = strtolower($catName);
+        }
     }
     if ($minPrice !== '') {
         $where[] = "price >= ?";
