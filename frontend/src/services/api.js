@@ -132,6 +132,11 @@ export const createOrderApi = async (payload) => {
   return data
 }
 
+export const fetchMyOrdersApi = async () => {
+  const { data } = await axiosInstance.get('/orders/my')
+  return data
+}
+
 export const fetchOrdersApi = async (params) => {
   const { data } = await axiosInstance.get('/orders', { params })
   return data

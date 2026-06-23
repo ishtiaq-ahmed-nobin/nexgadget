@@ -48,9 +48,15 @@ export default function Checkout() {
     setLoading(true)
     try {
       const payload = {
-        customer: { name: form.firstName + ' ' + form.lastName, email: form.email, phone: form.phone },
-        shipping: form,
+        user_id: user?.id || null,
+        customer_name: form.firstName + ' ' + form.lastName,
+        customer_email: form.email,
+        customer_phone: form.phone,
+        shipping_address: `${form.address}, ${form.city}, ${form.state} ${form.zip}, ${form.country}`,
         items: items.map((i) => ({ product_id: i.product.id, quantity: i.quantity, price: i.product.price })),
+        subtotal: total,
+        shipping: shipping,
+        tax: tax,
         total: grandTotal,
         payment_method: paymentMethod,
       }

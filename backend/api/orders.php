@@ -23,6 +23,27 @@ if ($method === 'POST') {
     exit;
 }
 
+if ($method === 'GET' && $id === 'my') {
+    $authUser = requireAuth();
+    $stmt = $db->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC");
+    $stmt->execute([$authUser['user_id']]);
+    $rows = $stmt->fetchAll();
+    $orders = array_map(function ($order) {
+        $items = json_decode($order['items'] ?? '[]', true) ?: [];
+        return [
+            ...$order,
+            'customer' => $order['customer_name'],
+            'email' => $order['customer_email'],
+            'items_raw' => $order['items'],
+            'items_count' => count($items),
+            'items' => $items,
+            'date' => substr($order['created_at'], 0, 10),
+        ];
+    }, $rows);
+    echo json_encode(['orders' => $orders, 'total' => count($orders)]);
+    exit;
+}
+
 if ($method === 'GET') {
     requireAdmin();
     $status = $_GET['status'] ?? '';

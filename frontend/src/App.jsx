@@ -13,6 +13,8 @@ import Login from './pages/public/Login'
 import Register from './pages/public/Register'
 import ForgotPassword from './pages/public/ForgotPassword'
 import VerifyOtp from './pages/public/VerifyOtp'
+import Profile from './pages/public/Profile'
+import Orders from './pages/public/Orders'
 import AdminDashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/Products'
 import AddProduct from './pages/admin/AddProduct'
@@ -41,6 +43,8 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/orders" element={<Orders />} />
       </Route>
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin" element={<AdminLayout />}>
