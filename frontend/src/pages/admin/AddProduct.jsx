@@ -25,8 +25,10 @@ export default function AddProduct() {
       await createProductApi(fd)
       toast.success('Product created successfully!')
       navigate('/admin/products')
-    } catch {
-      toast.error('Failed to create product')
+    } catch (err) {
+      const msg = err?.response?.data?.error || err?.message || 'Failed to create product'
+      toast.error(msg)
+      console.error('Create product error:', msg)
     } finally {
       setSaving(false)
     }
